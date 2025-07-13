@@ -6000,6 +6000,88 @@ kbd.kb-key {
   padding: 0;
 }
 
+/* Custom Header Components from Article */
+.kb-header {
+  margin-bottom: 2rem;
+}
+.kb-header-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.kb-h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--percapita-charcoal);
+  margin: 0;
+}
+.kb-badge {
+  display: inline-block;
+  background-color: var(--percapita-blue);
+  color: var(--percapita-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+.kb-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  color: var(--percapita-charcoal-light);
+}
+
+/* Tab Component Styling */
+.tab-container {
+  margin-top: 1.5rem;
+}
+.tab-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid #e5e7eb;
+}
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--percapita-charcoal-light);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+  list-style-type: none;
+}
+.tab:hover {
+  color: var(--percapita-blue);
+}
+.tab[aria-selected="true"] {
+  color: var(--percapita-blue);
+  border-bottom-color: var(--percapita-blue);
+}
+.tab-panel {
+  display: none; /* JS will handle showing the active panel */
+  padding: 2rem 0;
+  border-top: none;
+}
+.tab-panel[hidden] {
+  display: none;
+}
+.tab-panel:not([hidden]) {
+  display: block;
+}
+
+/* Custom Image Container */
+.image-crop-container {
+  width: 100%;
+  padding-top: 56.25%; /* Default 16:9 aspect ratio */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
 
 /* Custom Banner for Category & Section Pages */
 .top-image {
@@ -6200,3 +6282,5 @@ kbd.kb-key {
   border-radius: 0.5rem;
   border: 1px solid #e5e7eb;
 }
+
+
