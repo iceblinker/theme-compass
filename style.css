@@ -1,4 +1,26 @@
 @charset "UTF-8";
+
+:root {
+  /* Percapita Primary Palette */
+  --percapita-blue: #3E4FE5;
+  --percapita-blue-dark: #323FB7; /* Added for hover states */
+  --percapita-cream: #F9F4E8;
+  --percapita-orange: #F27C4F;
+  --percapita-charcoal: #353131;
+  --percapita-charcoal-light: #6b7280; /* Added for lighter text */
+  --percapita-white: #FFFFFF;
+  --percapita-success-green: #038153;
+
+  /* Base Text & Links */
+  --text-color: var(--percapita-charcoal);
+  --link-color: var(--percapita-blue);
+  --background-color: var(--percapita-white);
+  --background-color-darker: #f3f3f3; /* Added for hover states */
+  
+  /* Brand text color - assuming white for on-brand-color backgrounds */
+  --brand-text-color: var(--percapita-white);
+}
+
 /***** Normalize.css *****/
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 html {
@@ -187,9 +209,9 @@ template {
 }
 
 body {
-  background-color: $background_color;
-  color: $text_color;
-  font-family: $text_font;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -206,7 +228,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $heading_font;
+  font-family: 'Poppins', sans-serif;
   margin-top: 0;
 }
 
@@ -228,11 +250,11 @@ h4 {
 }
 
 a {
-  color: $link_color;
+  color: var(--link-color);
   text-decoration: none;
 }
 a:visited {
-  color: $visited_link_color;
+  color: var(--link-color);
 }
 a:hover, a:active, a:focus {
   text-decoration: underline;
@@ -248,13 +270,12 @@ a:hover, a:active, a:focus {
   max-width: 100%;
   box-sizing: border-box;
   transition: border 0.12s ease-in-out;
-  /* We use the :where selector to not increase the specificity of the selector */
 }
 .hbs-form input:where(:not([type=checkbox])), .search input:where(:not([type=checkbox])) {
   outline: none;
 }
 .hbs-form input:where(:not([type=checkbox])):focus, .search input:where(:not([type=checkbox])):focus {
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
 }
 .hbs-form input[disabled], .search input[disabled] {
   background-color: #ddd;
@@ -272,7 +293,7 @@ a:hover, a:active, a:focus {
   width: 100%;
 }
 .hbs-form select:focus, .search select:focus {
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
 }
 .hbs-form select::-ms-expand, .search select::-ms-expand {
   display: none;
@@ -286,7 +307,7 @@ a:hover, a:active, a:focus {
   padding: 10px;
 }
 .hbs-form textarea:focus, .search textarea:focus {
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
 }
 
 .container {
@@ -341,9 +362,9 @@ ul {
 /***** Buttons *****/
 .button, .pagination-next-link, .pagination-prev-link, .pagination-first-link, .pagination-last-link, .subscriptions-subscribe button, .requests-table-toolbar .organization-subscribe button, .community-follow button, .article-subscribe button, .section-subscribe button, .split-button button {
   background-color: transparent;
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
   border-radius: 4px;
-  color: $brand_color;
+  color: var(--percapita-blue);
   cursor: pointer;
   display: inline-block;
   font-size: 12px;
@@ -363,16 +384,16 @@ ul {
   }
 }
 .button:visited, .pagination-next-link:visited, .pagination-prev-link:visited, .pagination-first-link:visited, .pagination-last-link:visited, .subscriptions-subscribe button:visited, .requests-table-toolbar .organization-subscribe button:visited, .community-follow button:visited, .article-subscribe button:visited, .section-subscribe button:visited, .split-button button:visited {
-  color: $brand_color;
+  color: var(--percapita-blue);
 }
 .button:hover, .pagination-next-link:hover, .pagination-prev-link:hover, .pagination-first-link:hover, .pagination-last-link:hover, .subscriptions-subscribe button:hover, .requests-table-toolbar .organization-subscribe button:hover, .community-follow button:hover, .article-subscribe button:hover, .section-subscribe button:hover, .split-button button:hover, .button:active, .pagination-next-link:active, .pagination-prev-link:active, .pagination-first-link:active, .pagination-last-link:active, .subscriptions-subscribe button:active, .requests-table-toolbar .organization-subscribe button:active, .community-follow button:active, .article-subscribe button:active, .section-subscribe button:active, .split-button button:active, .button:focus, .pagination-next-link:focus, .pagination-prev-link:focus, .pagination-first-link:focus, .pagination-last-link:focus, .subscriptions-subscribe button:focus, .requests-table-toolbar .organization-subscribe button:focus, .community-follow button:focus, .article-subscribe button:focus, .section-subscribe button:focus, .split-button button:focus, .button.button-primary, .button-primary.pagination-next-link, .button-primary.pagination-prev-link, .button-primary.pagination-first-link, .button-primary.pagination-last-link, .subscriptions-subscribe button.button-primary, .subscriptions-subscribe button[data-selected=true], .requests-table-toolbar .organization-subscribe button.button-primary, .requests-table-toolbar .organization-subscribe button[data-selected=true], .community-follow button.button-primary, .article-subscribe button.button-primary, .article-subscribe button[data-selected=true], .section-subscribe button.button-primary, .section-subscribe button[data-selected=true], .split-button button.button-primary {
-  background-color: $brand_color;
-  color: $brand_text_color;
+  background-color: var(--percapita-blue);
+  color: var(--brand-text-color);
   text-decoration: none;
 }
 .button.button-primary:hover, .button-primary.pagination-next-link:hover, .button-primary.pagination-prev-link:hover, .button-primary.pagination-first-link:hover, .button-primary.pagination-last-link:hover, .subscriptions-subscribe button.button-primary:hover, .subscriptions-subscribe button[data-selected=true]:hover, .requests-table-toolbar .organization-subscribe button.button-primary:hover, .requests-table-toolbar .organization-subscribe button[data-selected=true]:hover, .community-follow button.button-primary:hover, .article-subscribe button.button-primary:hover, .article-subscribe button[data-selected=true]:hover, .section-subscribe button.button-primary:hover, .section-subscribe button[data-selected=true]:hover, .split-button button:hover, .button.button-primary:focus, .button-primary.pagination-next-link:focus, .button-primary.pagination-prev-link:focus, .button-primary.pagination-first-link:focus, .button-primary.pagination-last-link:focus, .subscriptions-subscribe button.button-primary:focus, .subscriptions-subscribe button[data-selected=true]:focus, .requests-table-toolbar .organization-subscribe button.button-primary:focus, .requests-table-toolbar .organization-subscribe button[data-selected=true]:focus, .community-follow button.button-primary:focus, .article-subscribe button.button-primary:focus, .article-subscribe button[data-selected=true]:focus, .section-subscribe button.button-primary:focus, .section-subscribe button[data-selected=true]:focus, .split-button button.button-primary:focus, .button.button-primary:active, .button-primary.pagination-next-link:active, .button-primary.pagination-prev-link:active, .button-primary.pagination-first-link:active, .button-primary.pagination-last-link:active, .subscriptions-subscribe button.button-primary:active, .subscriptions-subscribe button[data-selected=true]:active, .requests-table-toolbar .organization-subscribe button.button-primary:active, .requests-table-toolbar .organization-subscribe button[data-selected=true]:active, .community-follow button.button-primary:active, .article-subscribe button.button-primary:active, .article-subscribe button[data-selected=true]:active, .section-subscribe button.button-primary:active, .section-subscribe button[data-selected=true]:active, .split-button button.button-primary:active {
-  background-color: darken($brand_color, 20%);
-  border-color: darken($brand_color, 20%);
+  background-color: var(--percapita-blue-dark);
+  border-color: var(--percapita-blue-dark);
 }
 .button[data-disabled], [data-disabled].pagination-next-link, [data-disabled].pagination-prev-link, [data-disabled].pagination-first-link, [data-disabled].pagination-last-link, .subscriptions-subscribe button[data-disabled], .requests-table-toolbar .organization-subscribe button[data-disabled], .community-follow button[data-disabled], .article-subscribe button[data-disabled], .section-subscribe button[data-disabled], .split-button button[data-disabled] {
   cursor: default;
@@ -380,10 +401,10 @@ ul {
 
 .button-large, .hbs-form input[type=submit] {
   cursor: pointer;
-  background-color: $brand_color;
+  background-color: var(--percapita-blue);
   border: 0;
   border-radius: 4px;
-  color: $brand_text_color;
+  color: var(--brand-text-color);
   font-size: 14px;
   line-height: 2.72;
   min-width: 190px;
@@ -396,27 +417,27 @@ ul {
   }
 }
 .button-large:visited, .hbs-form input[type=submit]:visited {
-  color: $brand_text_color;
+  color: var(--brand-text-color);
 }
 .button-large:hover, .button-large:active, .button-large:focus, .hbs-form input[type=submit]:hover, .hbs-form input[type=submit]:active, .hbs-form input[type=submit]:focus {
-  background-color: darken($brand_color, 20%);
+  background-color: var(--percapita-blue-dark);
 }
 .button-large[disabled], .hbs-form input[type=submit][disabled] {
   background-color: #ddd;
 }
 
 .button-secondary {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
   border: 1px solid #87929D;
   background-color: transparent;
 }
 .button-secondary:visited {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
 }
 .button-secondary:hover, .button-secondary:focus, .button-secondary:active {
-  color: $text_color;
+  color: var(--text-color);
   border: 1px solid #87929D;
-  background-color: darken($background_color, 3%);
+  background-color: var(--background-color-darker);
 }
 
 /***** Split button *****/
@@ -425,21 +446,21 @@ ul {
 }
 
 .split-button button {
-  background-color: $brand_color;
+  background-color: var(--percapita-blue);
   border: 0;
-  color: $brand_text_color;
+  color: var(--brand-text-color);
   height: 32px;
   line-height: 16px;
-  outline-color: $brand_color;
+  outline-color: var(--percapita-blue);
 }
 
 [dir=rtl] .split-button button:not(:only-child):first-child {
-  border-left: 1px solid $brand_text_color;
+  border-left: 1px solid var(--brand-text-color);
   border-top-left-radius: unset;
   border-bottom-left-radius: unset;
 }
 [dir=ltr] .split-button button:not(:only-child):first-child {
-  border-right: 1px solid $brand_text_color;
+  border-right: 1px solid var(--brand-text-color);
   border-top-right-radius: unset;
   border-bottom-right-radius: unset;
 }
@@ -475,7 +496,7 @@ ul {
 }
 .table th,
 .table th a {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
   font-size: 13px;
   text-align: left;
 }
@@ -535,7 +556,7 @@ ul {
   width: 100%;
 }
 .form-field input:focus {
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
 }
 
 .form-field input[type=text] {
@@ -543,7 +564,7 @@ ul {
   border-radius: 4px;
 }
 .form-field input[type=text]:focus {
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
 }
 
 .form-field input[type=checkbox] {
@@ -559,7 +580,7 @@ ul {
   vertical-align: middle;
 }
 .form-field .nesty-input:focus {
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
   text-decoration: none;
 }
 
@@ -569,7 +590,7 @@ ul {
 
 .form-field .hc-multiselect-toggle:focus {
   outline: none;
-  border: 1px solid $brand_color;
+  border: 1px solid var(--percapita-blue);
   text-decoration: none;
 }
 
@@ -582,12 +603,12 @@ ul {
 }
 
 .form-field .optional {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
   margin-left: 4px;
 }
 
 .form-field p {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
   font-size: 12px;
   margin: 5px 0;
 }
@@ -598,7 +619,7 @@ ul {
 }
 
 .form footer a {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
   cursor: pointer;
   margin-right: 15px;
 }
@@ -616,7 +637,7 @@ ul {
   padding: 10px 0;
 }
 .form .suggestion-list li a:visited {
-  color: $visited_link_color;
+  color: var(--link-color);
 }
 
 /***** Header *****/
@@ -644,7 +665,7 @@ ul {
 
 .logo span {
   margin: 0 10px;
-  color: $brand_color;
+  color: var(--percapita-blue);
 }
 
 .logo a {
@@ -711,7 +732,7 @@ ul {
 }
 .nav-wrapper-desktop a {
   border: 0;
-  color: $link_color;
+  color: var(--link-color);
   display: none;
   font-size: 14px;
   padding: 0 20px 0 0;
@@ -727,7 +748,7 @@ ul {
 }
 .nav-wrapper-desktop a:hover, .nav-wrapper-desktop a:focus, .nav-wrapper-desktop a:active {
   background-color: transparent;
-  color: $link_color;
+  color: var(--link-color);
   text-decoration: underline;
 }
 
@@ -789,7 +810,7 @@ ul {
   padding: 8px 24px;
   width: 100%;
   height: 100%;
-  color: $text_color;
+  color: var(--text-color);
   cursor: pointer;
   text-align: start;
 }
@@ -802,7 +823,7 @@ ul {
   padding: 8px 24px;
   width: 100%;
   height: 100%;
-  color: $text_color;
+  color: var(--text-color);
 }
 .nav-wrapper-mobile .menu-list-mobile-items a:active, .nav-wrapper-mobile .menu-list-mobile-items a:focus, .nav-wrapper-mobile .menu-list-mobile-items a:hover {
   background-color: #f3f3f3;
@@ -878,17 +899,17 @@ ul {
 }
 .user-info > button {
   border: 0;
-  color: $link_color;
+  color: var(--link-color);
   min-width: 0;
   padding: 0;
   white-space: nowrap;
 }
 .user-info > button:hover, .user-info > button:focus {
-  color: $link_color;
+  color: var(--link-color);
   background-color: transparent;
 }
 .user-info > button::after {
-  color: $link_color;
+  color: var(--link-color);
   padding-right: 15px;
 }
 [dir=rtl] .user-info > button::after {
@@ -927,11 +948,11 @@ ul {
   width: 40px;
 }
 .avatar .icon-agent {
-  color: $brand_color;
+  color: var(--percapita-blue);
   border: 2px solid #fff;
   border-radius: 50%;
   bottom: -4px;
-  background-color: $brand_text_color;
+  background-color: var(--brand-text-color);
   font-size: 17px;
   height: 17px;
   line-height: 17px;
@@ -941,37 +962,29 @@ ul {
   width: 17px;
 }
 
-/***** Footer *****/
+/* Corrected footer to match user's custom design.
+  The default Copenhagen footer is removed.
+*/
 .footer {
-  border-top: 1px solid #ddd;
-  margin-top: 60px;
-  padding: 30px 0;
-}
-.footer a {
-  color: lighten($text_color, 20%);
-}
-.footer-inner {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 5%;
-  display: flex;
-  justify-content: space-between;
-}
-@media (min-width: 1160px) {
-  .footer-inner {
-    padding: 0;
-    width: 90%;
-  }
-}
-.footer-language-selector button {
-  color: lighten($text_color, 20%);
-  display: inline-block;
+  border-top: none; /* Removed default border */
+  margin-top: 0; /* Removed default margin */
+  padding: 0; /* Removed default padding */
 }
 
-.powered-by-zendesk a,
-.powered-by-zendesk a:visited {
-  color: lighten($text_color, 20%);
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  text-align: center;
 }
+
+/* Hiding the default language selector and powered by zendesk */
+.footer-language-selector,
+.powered-by-zendesk {
+    display: none;
+}
+
 
 /***** Breadcrumbs *****/
 .breadcrumbs {
@@ -985,7 +998,7 @@ ul {
   }
 }
 .breadcrumbs li {
-  color: lighten($text_color, 20%);
+  color: var(--percapita-charcoal-light);
   font-size: 13px;
   max-width: 450px;
   overflow: hidden;
@@ -995,9 +1008,15 @@ ul {
   content: ">";
   margin: 0 4px;
 }
-.breadcrumbs li a:visited {
-  color: $link_color;
+.breadcrumbs li a {
+    color: var(--link-color);
 }
+.breadcrumbs li a:visited {
+  color: var(--link-color);
+}
+
+
+/* --- ADD YOUR CUSTOM FEATURE STYLES BELOW THIS LINE --- */
 
 /***** Search field *****/
 .search-container {
@@ -1125,21 +1144,20 @@ ul {
 }
 
 /***** Hero component *****/
+/* Custom Homepage Hero Styles */
 .hero {
-  background-image: url($homepage_background_image);
-  background-position: center;
-  background-size: cover;
-  height: 300px;
-  padding: 0 20px;
-  text-align: center;
-  width: 100%;
+  height: 450px; /* Increase height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .hero-inner {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 610px;
-  margin: 0 auto;
+  transform: none; /* Reset default positioning */
+  position: static;
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
+  padding: 2rem;
+  border-radius: 8px;
 }
 
 .page-header {
@@ -4828,4 +4846,954 @@ zd-summary-block {
   color: lighten($text_color, 20%);
   font-style: italic;
   padding: 0 15px;
+}
+
+/* Custom Header Styles */
+.submit-a-request {
+    font-weight: bold;
+    color: var(--percapita-orange);
+}
+
+.submit-a-request:hover {
+    text-decoration: underline;
+    color: var(--percapita-blue);
+}
+
+/* ==========================================================================
+   FEATURE-RICH KB STYLES
+   ========================================================================== */
+
+/* --- 1. Command Palette (Cmd/Ctrl + K) --- */
+.command-palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+}
+
+.command-palette {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--percapita-white);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.command-palette-search input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  outline: none;
+}
+
+.command-palette-results {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.command-palette-results li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.command-palette-results li a:hover,
+.command-palette-results li a.selected {
+  background-color: var(--percapita-cream);
+  color: var(--percapita-charcoal);
+}
+
+.command-palette-footer {
+  background-color: #f9fafb;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* --- 2. Sticky "On this page" TOC --- */
+.toc-container {
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.toc-container h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-list a {
+  display: block;
+  padding: 6px 0 6px 12px;
+  color: #6b7280;
+  text-decoration: none;
+  border-left: 2px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.toc-list a:hover {
+  color: var(--percapita-blue);
+  background-color: var(--percapita-cream);
+}
+
+.toc-list a.is-active {
+  color: var(--percapita-blue);
+  border-left-color: var(--percapita-blue);
+  font-weight: 600;
+  transform: translateX(4px);
+}
+
+.toc-list .toc-level-3 a {
+  padding-left: 24px;
+}
+
+
+/* --- 3. Process/Update Timeline --- */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  height: 100%;
+  width: 2px;
+  background: #e5e7eb;
+}
+.timeline-item {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 2rem;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--percapita-white);
+  border: 3px solid var(--percapita-blue);
+}
+.timeline-item-title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+.timeline-item-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* --- 4. Image Comparison Slider --- */
+.comparison-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.comparison-slider img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+.comparison-slider .img-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  object-fit: cover;
+  object-position: left;
+  overflow: hidden;
+}
+.comparison-slider .slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background-color: var(--percapita-orange);
+  cursor: ew-resize;
+  z-index: 10;
+}
+.comparison-slider .slider-handle::before {
+  content: '↔';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--percapita-orange);
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+/* --- 5. Click-to-Zoom Images --- */
+.image-zoom-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  cursor: zoom-out;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.image-zoom-overlay.visible {
+  opacity: 1;
+}
+.image-zoom-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+.image-zoom-overlay.visible img {
+  transform: scale(1);
+}
+
+/* --- 6. Enhanced Tooltips --- */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted var(--percapita-charcoal);
+  cursor: help;
+}
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: var(--percapita-charcoal);
+  color: var(--percapita-white);
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --- 7. Article Reading Progress Bar --- */
+#reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--percapita-orange);
+  width: 0%;
+  z-index: 4000;
+  transition: width 0.1s linear;
+}
+
+/* --- 8. Interactive Checklists --- */
+.interactive-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+.interactive-checklist li {
+  padding-left: 30px;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+.interactive-checklist li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  background: var(--percapita-white);
+}
+.interactive-checklist li.checked {
+  color: #888;
+  text-decoration: line-through;
+}
+.interactive-checklist li.checked::before {
+  background-color: var(--percapita-success-green);
+  border-color: var(--percapita-success-green);
+}
+.interactive-checklist li.checked::after {
+  content: '✔';
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  color: white;
+  font-weight: bold;
+}
+
+/* --- Zendesk Garden: Stepper --- */
+.stepper {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stepper-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding-bottom: 2rem;
+  padding-left: 40px;
+}
+
+.stepper-item:last-child {
+  padding-bottom: 0;
+}
+
+.stepper-item::before { /* The circle number */
+  content: counter(step);
+  counter-increment: step;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: var(--percapita-charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid #e5e7eb;
+}
+
+.stepper-item:not(:last-child)::after { /* The connecting line */
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 28px;
+  width: 2px;
+  height: calc(100% - 28px);
+  background-color: #e5e7eb;
+}
+
+.stepper-item.is-active .stepper-title {
+  color: var(--percapita-blue);
+}
+
+.stepper-item.is-active::before {
+  background-color: var(--percapita-white);
+  border-color: var(--percapita-blue);
+  color: var(--percapita-blue);
+}
+
+.stepper-item.is-completed::before {
+  content: '✔';
+  background-color: var(--percapita-success-green);
+  border-color: var(--percapita-success-green);
+  color: var(--percapita-white);
+}
+
+.stepper-item.is-completed::after {
+  background-color: var(--percapita-success-green);
+}
+
+.stepper-title {
+  font-weight: bold;
+  margin: 0 0 0.25rem 0;
+}
+.stepper-description {
+  margin: 0;
+  color: #6b7280;
+}
+
+/* --- Zendesk Garden: Skeleton Loading --- */
+@keyframes skeleton-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-wrapper {
+  padding: 1rem;
+  background-color: var(--percapita-white);
+  border-radius: 8px;
+}
+
+.skeleton-line {
+  position: relative;
+  overflow: hidden;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  height: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+
+/* --- Migrated Custom Components from Old Theme --- */
+
+/* Semantic Callout Cards */
+.kb-info-card, .kb-success-card, .kb-warning-card, .kb-alert-card {
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 5px solid;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.kb-info-card::before, .kb-success-card::before, .kb-warning-card::before, .kb-alert-card::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  background-color: currentColor;
+}
+.kb-info-card { background-color: #eef5ff; color: #1a5f9e; border-color: var(--percapita-info-blue, #1f73b7); }
+.kb-info-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E"); }
+.kb-success-card { background-color: #eaf8f0; color: #1e643f; border-color: var(--percapita-success-green); }
+.kb-success-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E"); }
+.kb-warning-card { background-color: var(--percapita-cream); color: #92400e; border-color: var(--percapita-orange); }
+.kb-warning-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E"); }
+.kb-alert-card { background-color: #fef2f2; color: #991b1b; border-color: var(--percapita-alert-red, #DF4F4F); }
+.kb-alert-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E"); }
+
+/* Copy to Clipboard Component */
+.kb-copy-snippet {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  font-family: monospace;
+}
+.kb-copy-snippet button {
+  background-color: var(--percapita-white);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.kb-copy-snippet button:hover {
+  background-color: #e5e7eb;
+}
+.kb-copy-snippet button.copied {
+  background-color: var(--percapita-success-green);
+  color: var(--percapita-white);
+}
+
+/* Keyboard Key Component */
+kbd.kb-key {
+  background-color: #e5e7eb;
+  border: 1px solid #d1d5db;
+  border-bottom: 3px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: 0.9em;
+  margin: 0 2px;
+}
+
+/* Phone Mockup Component */
+.kb-phone-mockup {
+  background-color: #1f2937;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  max-width: 300px;
+  margin: 1.5rem auto;
+}
+.kb-phone-mockup img {
+  width: 100%;
+  display: block;
+  border-radius: 28px;
+}
+
+/* Collapsible Details Component */
+.kb-details .kb-summary {
+  cursor: pointer;
+  list-style: none;
+}
+.kb-details .kb-summary::-webkit-details-marker {
+  display: none;
+}
+
+
+/* --- Interactive Hotspot Feature --- */
+.hotspot-container {
+  position: relative;
+  display: inline-block; /* Or 'block' if you want it to take full width */
+  line-height: 0; /* Removes extra space below the image */
+}
+
+.hotspot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--percapita-blue);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transform: translate(-50%, -50%); /* Center the dot on the exact coordinates */
+  box-shadow: 0 0 0 0 rgba(62, 79, 229, 0.7);
+  animation: pulse 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+  z-index: 10;
+}
+
+/* Pulsing Animation */
+@keyframes pulse {
+  to {
+    box-shadow: 0 0 0 12px rgba(62, 79, 229, 0);
+  }
+}
+
+.hotspot-content {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 150%; /* Position above the dot */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--percapita-charcoal);
+  color: var(--percapita-white);
+  padding: 1rem;
+  border-radius: 8px;
+  width: 250px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 20;
+}
+
+.hotspot.active .hotspot-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.hotspot-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--percapita-white);
+  font-size: 1rem;
+}
+
+.hotspot-content p {
+  margin: 0;
+}
+
+/* --- Content Drawer Feature --- */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.drawer-overlay.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 500px; /* Adjust drawer width as needed */
+  height: 100%;
+  background-color: var(--percapita-white);
+  box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-overlay.is-open .drawer-panel {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.drawer-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  color: var(--percapita-charcoal-light);
+}
+
+.drawer-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* Style for the loading state */
+.drawer-content.is-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* --- Definition Tooltip Feature --- */
+
+/* The container for the trigger word and its tooltip */
+.def-tooltip {
+  position: relative; /* This is crucial for positioning the tooltip content */
+  display: inline-block;
+  border-bottom: 2px dotted var(--percapita-orange);
+  cursor: help;
+}
+
+/* The tooltip pop-up box - hidden by default */
+.def-tooltip-content {
+  visibility: hidden;
+  opacity: 0;
+  width: 280px;
+  background-color: var(--percapita-charcoal);
+  color: var(--percapita-white);
+  text-align: left;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  
+  /* Positioning */
+  position: absolute;
+  z-index: 100;
+  bottom: 140%; /* Position it above the text */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Smooth transition */
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* Arrow pointing down from the tooltip box */
+.def-tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* Position the arrow at the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--percapita-charcoal) transparent transparent transparent;
+}
+
+/* The magic: Show the tooltip when hovering over the PARENT container */
+.def-tooltip:hover .def-tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ==========================================================================
+   COMPARISON GRID STYLES
+   ========================================================================== */
+/* --- Interactive Comparison Grid --- */
+.comparison-grid-container {
+  margin: 2rem 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grid-filters {
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.grid-filter-btn {
+  background-color: var(--percapita-white);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.grid-filter-btn:hover {
+  border-color: var(--percapita-blue);
+  color: var(--percapita-blue);
+}
+
+.grid-filter-btn.active {
+  background-color: var(--percapita-blue);
+  color: var(--percapita-white);
+  border-color: var(--percapita-blue);
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* 1 column for labels, 3 for plans */
+}
+
+.grid-header {
+  background-color: #f3f4f6;
+  padding: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.grid-cell {
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.grid-cell.grid-label {
+  text-align: left;
+  font-weight: 500;
+}
+
+/* Styling for the checkmark */
+.grid-cell:not(.grid-label):not(:empty):not(:contains('-')) {
+    color: var(--percapita-success-green);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Faded and Highlighted states */
+.comparison-grid.is-highlighting .grid-cell.is-faded {
+  opacity: 0.3;
+}
+.comparison-grid.is-highlighting .grid-cell.is-highlighted {
+  background-color: var(--percapita-cream);
+}
+
+
+/* ==========================================================================
+   SCENARIO TOGGLES
+   ========================================================================== */
+   /* This section provides a toggle interface for different scenarios in the KB articles.
+   Users can switch between scenarios to view different content or configurations.
+/* --- "View As" Scenario Toggles --- */
+.scenario-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.scenario-btn {
+  background-color: var(--percapita-white);
+  border: 1px solid #d1d5db;
+  color: var(--percapita-charcoal-light);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scenario-btn:hover {
+  border-color: var(--percapita-blue);
+  color: var(--percapita-blue);
+}
+
+.scenario-btn.active {
+  background-color: var(--percapita-blue);
+  color: var(--percapita-white);
+  border-color: var(--percapita-blue);
+}
+
+.scenario-content {
+  display: none; /* Hide all scenarios by default */
+}
+
+.scenario-content.is-active {
+  display: block; /* Show only the active one */
+}
+
+
+
+/* --- Custom Favorites Toolkit --- */
+/* This section provides a custom toolkit for managing favorites in the KB articles.
+   It includes a button to toggle favorites and a dropdown to view the list of favorites. */  
+.article-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.favorite-btn {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: var(--percapita-charcoal-light);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.favorite-btn:hover {
+  border-color: var(--percapita-blue);
+  color: var(--percapita-blue);
+  text-decoration: none;
+}
+
+.favorite-btn.is-favorite {
+  background-color: var(--percapita-orange);
+  color: var(--percapita-white);
+  border-color: var(--percapita-orange);
+}
+
+.favorite-btn.is-favorite svg {
+  fill: var(--percapita-white);
+}
+
+.favorites-toolkit {
+  display: inline-block;
+  margin-right: 1.5rem; /* Space between toolkit and user menu */
+}
+
+.favorites-toolkit h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--percapita-charcoal-light);
+  padding: 7px 20px;
+  margin: 0;
+}
+
+#favorites-list li a {
+  display: block;
+  white-space: normal;
+  padding: 7px 20px;
+}
+
+#favorites-list .no-favorites {
+  padding: 7px 20px;
+  font-style: italic;
+  color: var(--percapita-charcoal-light);
+}
+
+
+/* --- Styles for the KB Authoring Guide --- */
+
+
+/* Adds spacing between each component's section */
+.guide-section {
+  border-top: 2px solid #e5e7eb;
+  padding-top: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* A simple box to showcase the live component */
+.live-example-box {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+/* Styling for the code snippets, works with Prism.js */
+.code-snippet pre[class*="language-"] {
+  padding: 1rem;
+  margin: 0;
+  border-radius: 8px;
+  overflow: auto;
 }

@@ -23,19 +23,33 @@
             {{/link}}
           </li>
         {{/unless}}
+
       </ul>
+      <div class="favorites-toolkit dropdown">
+  <button class="dropdown-toggle" aria-haspopup="true">
+    My Toolkit
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" viewBox="0 0 12 12" class="dropdown-chevron-icon" aria-hidden="true">
+      <path fill="none" stroke="currentColor" stroke-linecap="round" d="M3 4.5l2.6 2.6c.2.2.5.2.7 0L9 4.5"/>
+    </svg>
+  </button>
+  <div class="dropdown-menu" role="menu">
+    <h4>My Favorites</h4>
+    <ul id="favorites-list">
+      </ul>
+  </div>
+</div>
     </nav>
     {{#if signed_in}}
-      <div class="user-info dropdown">
-        <button class="dropdown-toggle" aria-haspopup="true">
-          {{user_avatar class="user-avatar"}}
-          <span>
-            {{user_name}}
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" viewBox="0 0 12 12" class="dropdown-chevron-icon" aria-hidden="true">
-              <path fill="none" stroke="currentColor" stroke-linecap="round" d="M3 4.5l2.6 2.6c.2.2.5.2.7 0L9 4.5"/>
-            </svg>
-          </span>
-        </button>
+  <div class="user-info dropdown">
+    <button class="dropdown-toggle" aria-haspopup="true">
+      {{user_avatar class="user-avatar"}}
+      <span>
+        Saludos {{user_name}}!
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" viewBox="0 0 12 12" class="dropdown-chevron-icon" aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" d="M3 4.5l2.6 2.6c.2.2.5.2.7 0L9 4.5"/>
+        </svg>
+      </span>
+    </button>
         <div class="dropdown-menu" role="menu">
           {{#my_profile role="menuitem"}}{{t 'profile'}}{{/my_profile}}
           {{link "requests" role="menuitem"}}
@@ -97,5 +111,15 @@
       </ul>
     </nav>
   </div>
-
-</header>
+</header> <div class="command-palette-overlay" id="commandPaletteOverlay" style="display: none;">
+  <div class="command-palette">
+    <div class="command-palette-search">
+      <input type="text" id="commandPaletteInput" placeholder="Search articles, links, and actions...">
+    </div>
+    <ul class="command-palette-results" id="commandPaletteResults">
+      </ul>
+    <div class="command-palette-footer">
+      <span>Press <strong>ESC</strong> to close</span>
+    </div>
+  </div>
+</div>

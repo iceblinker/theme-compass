@@ -13,6 +13,8 @@
 
   <div class="article-container" id="article-container">
     <aside class="article-sidebar" aria-labelledby="section-articles-title">
+  <div id="toc-container" class="toc-container"></div>
+  
       {{#if settings.show_articles_in_section}}
         <div class="collapsible-sidebar">
           <button type="button" class="collapsible-sidebar-toggle" aria-labelledby="section-articles-title" aria-expanded="false">
@@ -48,49 +50,57 @@
 
     <article id="main-content" class="article">
       <header class="article-header">
-        <h1 title="{{article.title}}" class="article-title">
-          {{article.title}}
-          {{#if article.internal}}
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" focusable="false" viewBox="0 0 16 16" class="icon-lock" title="{{t 'internal'}}">
-              <rect width="12" height="9" x="2" y="7" fill="currentColor" rx="1" ry="1"/>
-              <path fill="none" stroke="currentColor" d="M4.5 7.5V4a3.5 3.5 0 017 0v3.5"/>
-            </svg>
-          {{/if}}
-        </h1>
+  <h1 title="{{article.title}}" class="article-title">
+    {{article.title}}
+    {{#if article.internal}}
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" focusable="false" viewBox="0 0 16 16" class="icon-lock" title="{{t 'internal'}}">
+        <rect width="12" height="9" x="2" y="7" fill="currentColor" rx="1" ry="1"/>
+        <path fill="none" stroke="currentColor" d="M4.5 7.5V4a3.5 3.5 0 017 0v3.5"/>
+      </svg>
+    {{/if}}
+  </h1>
 
-        <div class="article-author">
-          {{#if settings.show_article_author}}
-            <div class="avatar article-avatar">
-              {{#if article.author.agent}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" aria-hidden="true" viewBox="0 0 12 12" class="icon-agent" aria-label="{{t 'team_member' name=article.author.name}}">
-                  <path fill="currentColor" d="M6 0C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm2.3 7H3.7c-.3 0-.4-.3-.3-.5C3.9 7.6 4.9 7 6 7s2.1.6 2.6 1.5c.1.2 0 .5-.3.5z"/>
-                </svg>
-              {{/if}}
-              <img src="{{article.author.avatar_url}}" alt="" class="user-avatar"/>
-            </div>
-          {{/if}}
-          <div class="article-meta">
-            {{#if settings.show_article_author}}
-              {{#link 'user_profile' id=article.author.id}}
-                {{article.author.name}}
-              {{/link}}
-            {{/if}}
-
-            <div class="meta-group">
-              {{#is article.created_at article.edited_at}}
-                <span class="meta-data">{{date article.created_at timeago=true}}</span>
-              {{else}}
-                <span class="meta-data">{{date article.edited_at timeago=true}}</span>
-                <span class="meta-data">{{t 'updated'}}</span>
-              {{/is}}
-            </div>
-          </div>
-        </div>
-
-        {{#if settings.show_follow_article}}
-          <div class="article-subscribe">{{subscribe}}</div>
+  <div class="article-author">
+    {{#if settings.show_article_author}}
+      <div class="avatar article-avatar">
+        {{#if article.author.agent}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" focusable="false" aria-hidden="true" viewBox="0 0 12 12" class="icon-agent" aria-label="{{t 'team_member' name=article.author.name}}">
+            <path fill="currentColor" d="M6 0C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm2.3 7H3.7c-.3 0-.4-.3-.3-.5C3.9 7.6 4.9 7 6 7s2.1.6 2.6 1.5c.1.2 0 .5-.3.5z"/>
+          </svg>
         {{/if}}
-      </header>
+        <img src="{{article.author.avatar_url}}" alt="" class="user-avatar"/>
+      </div>
+    {{/if}}
+    <div class="article-meta">
+      {{#if settings.show_article_author}}
+        {{#link 'user_profile' id=article.author.id}}
+          {{article.author.name}}
+        {{/link}}
+      {{/if}}
+
+      <div class="meta-group">
+        {{#is article.created_at article.edited_at}}
+          <span class="meta-data">{{date article.created_at timeago=true}}</span>
+        {{else}}
+          <span class="meta-data">{{date article.edited_at timeago=true}}</span>
+          <span class="meta-data">{{t 'updated'}}</span>
+        {{/is}}
+      </div>
+    </div>
+  </div>
+
+  {{#if settings.show_follow_article}}
+    <div class="article-controls">
+      {{subscribe}}
+      <button class="favorite-btn" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M3.612 15.443c-.343.226-.74.226-1.084 0l-1.62-1.074a.92.92 0 0 1-.444-1.084l.305-1.832a.92.92 0 0 0-.212-.87L.116 10.22a.92.92 0 0 1-.226-1.084l1.074-1.62a.92.92 0 0 1 1.084-.444l1.832.305a.92.92 0 0 0 .87-.212L6.17 5.116a.92.92 0 0 1 1.084-.226l1.62 1.074a.92.92 0 0 1 .444 1.084l-.305 1.832a.92.92 0 0 0 .212.87l.444.444a.92.92 0 0 1 .226 1.084l-1.074 1.62a.92.92 0 0 1-1.084.444l-1.832-.305a.92.92 0 0 0-.87.212l-1.074 1.62zM8 4.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
+        </svg>
+        <span>Favorite</span>
+      </button>
+    </div>
+  {{/if}}
+</header>
 
       <section class="article-info">
         <div class="article-content">

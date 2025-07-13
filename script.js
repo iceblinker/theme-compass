@@ -659,3 +659,851 @@
   });
 
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ==========================================================================
+     FEATURE-RICH KB SCRIPTS
+     ========================================================================== */
+
+  // --- 1. Command Palette (Cmd/Ctrl + K) ---
+  // This script creates a command palette that allows users to quickly navigate to links on the page.
+  const commandPaletteOverlay = document.getElementById('commandPaletteOverlay');
+  const commandPaletteInput = document.getElementById('commandPaletteInput');
+  const commandPaletteResults = document.getElementById('commandPaletteResults');
+
+  const openPalette = () => {
+    if (!commandPaletteOverlay) return;
+    commandPaletteOverlay.style.display = 'flex';
+    commandPaletteInput.value = '';
+    buildPaletteResults('');
+    commandPaletteInput.focus();
+  };
+
+  const closePalette = () => {
+    if (!commandPaletteOverlay) return;
+    commandPaletteOverlay.style.display = 'none';
+  };
+
+  const buildPaletteResults = (query) => {
+    const allLinks = Array.from(document.querySelectorAll('a[href]'));
+    const uniqueLinks = allLinks.reduce((acc, link) => {
+      if (link.href && link.innerText.trim() && !acc.some(l => l.href === link.href)) {
+        acc.push({ href: link.href, text: link.innerText.trim() });
+      }
+      return acc;
+    }, []);
+    
+    const filtered = uniqueLinks.filter(link => link.text.toLowerCase().includes(query.toLowerCase()));
+    
+    commandPaletteResults.innerHTML = '';
+    filtered.slice(0, 10).forEach(link => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.textContent = link.text;
+      a.onclick = closePalette; // Close palette when a link is clicked
+      li.appendChild(a);
+      commandPaletteResults.appendChild(li);
+    });
+  };
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openPalette();
+    }
+    if (e.key === 'Escape' && commandPaletteOverlay.style.display === 'flex') {
+      closePalette();
+    }
+  });
+
+  if (commandPaletteInput) {
+    commandPaletteInput.addEventListener('input', () => buildPaletteResults(commandPaletteInput.value));
+    commandPaletteOverlay.addEventListener('click', (e) => {
+      if (e.target === commandPaletteOverlay) {
+        closePalette();
+      }
+    });
+  }
+
+
+  // --- 2. "On this page" Sticky TOC ---
+  // This script generates a table of contents based on headings in the article body.
+  const tocContainer = document.getElementById('toc-container');
+  const articleBody = document.querySelector('.article-body');
+
+  if (tocContainer && articleBody) {
+    const headings = articleBody.querySelectorAll('h2, h3');
+    if (headings.length > 1) {
+      const tocList = document.createElement('ul');
+      tocList.className = 'toc-list';
+      let tocTitle = document.createElement('h3');
+      tocTitle.textContent = 'On this page';
+      tocContainer.appendChild(tocTitle);
+      
+      headings.forEach((heading, i) => {
+        const id = 'toc-heading-' + i;
+        heading.id = id;
+        
+        const li = document.createElement('li');
+        li.className = 'toc-level-' + heading.tagName.toLowerCase().charAt(1);
+        
+        const a = document.createElement('a');
+        a.textContent = heading.textContent;
+        a.href = '#' + id;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+      
+      tocContainer.appendChild(tocList);
+
+      const tocLinks = tocContainer.querySelectorAll('a');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          const correspondingLink = tocContainer.querySelector(`a[href="#${id}"]`);
+          if (entry.isIntersecting) {
+            tocLinks.forEach(link => link.classList.remove('is-active'));
+            correspondingLink.classList.add('is-active');
+          }
+        });
+      }, { rootMargin: "0px 0px -80% 0px" });
+
+      headings.forEach(heading => observer.observe(heading));
+    }
+  }
+
+  // --- 3. Process/Update Timeline ---
+  // This is a CSS-only component, no JS needed unless for dynamic loading.
+
+  // --- 4. Image Comparison Slider ---
+  // This script allows users to compare two images by sliding a handle.
+  document.querySelectorAll('.comparison-slider').forEach(slider => {
+    let isDragging = false;
+    const handle = slider.querySelector('.slider-handle');
+    const topImg = slider.querySelector('.img-top');
+
+    const onDrag = (e) => {
+      if (!isDragging) return;
+      const rect = slider.getBoundingClientRect();
+      let x = (e.clientX || e.touches[0].clientX) - rect.left;
+      x = Math.max(0, Math.min(x, rect.width));
+      topImg.style.width = (x / rect.width) * 100 + '%';
+      handle.style.left = (x / rect.width) * 100 + '%';
+    };
+
+    handle.addEventListener('mousedown', () => isDragging = true);
+    handle.addEventListener('touchstart', () => isDragging = true);
+    document.addEventListener('mouseup', () => isDragging = false);
+    document.addEventListener('touchend', () => isDragging = false);
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('touchmove', onDrag);
+  });
+
+  // --- 5. Click-to-Zoom Images ---
+  // This script allows users to click on images to zoom in.
+  // It creates an overlay with the zoomed image and closes it on click.
+  if (articleBody) {
+    articleBody.querySelectorAll('img').forEach(img => {
+      if (!img.closest('a')) { // Don't apply to images that are already links
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'image-zoom-overlay';
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+
+          // Show with a slight delay for transition
+          setTimeout(() => overlay.classList.add('visible'), 10);
+          
+          overlay.addEventListener('click', () => {
+            overlay.classList.remove('visible');
+            overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
+          });
+        });
+      }
+    });
+  }
+
+  // --- 6. Enhanced Tooltips ---
+  // This is a CSS-only component, no JS needed.
+
+  // --- 7. Article Reading Progress Bar ---
+  // This script creates a reading progress bar that fills as the user scrolls down the article.
+  const progressBar = document.createElement('div');
+  progressBar.id = 'reading-progress-bar';
+  document.body.appendChild(progressBar);
+  
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    progressBar.style.width = progress + '%';
+  });
+  
+  // --- 8. Interactive Checklists ---
+  // This script allows users to check off items in a checklist.
+  // It toggles a 'checked' class on list items when clicked.
+  document.querySelectorAll('.interactive-checklist li').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+    });
+  });
+
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ==========================================================================
+     FEATURE-RICH KB SCRIPTS
+     ========================================================================== */
+
+  // --- 1. Command Palette (Cmd/Ctrl + K) ---
+  // This script creates a command palette that allows users to quickly navigate to links on the page.
+  // It opens with Cmd/Ctrl + K and filters links based on user input.
+  const commandPaletteOverlay = document.getElementById('commandPaletteOverlay');
+  const commandPaletteInput = document.getElementById('commandPaletteInput');
+  const commandPaletteResults = document.getElementById('commandPaletteResults');
+
+  if (commandPaletteOverlay && commandPaletteInput && commandPaletteResults) {
+    const openPalette = () => {
+      commandPaletteOverlay.style.display = 'flex';
+      buildPaletteResults('');
+      commandPaletteInput.focus();
+    };
+
+    const closePalette = () => {
+      commandPaletteOverlay.style.display = 'none';
+      commandPaletteInput.value = '';
+    };
+
+    const buildPaletteResults = (query) => {
+      const allLinks = Array.from(document.querySelectorAll('a[href]'));
+      const uniqueLinks = allLinks.reduce((acc, link) => {
+        const text = link.innerText.trim();
+        const href = link.href;
+        // Filter out irrelevant links and duplicates
+        if (text && href && !href.includes('javascript:void(0)') && !acc.some(l => l.href === href || l.text === text)) {
+           if (!link.closest('.pagination')) { // Exclude pagination links
+             acc.push({ href: href, text: text });
+           }
+        }
+        return acc;
+      }, []);
+      
+      const filtered = uniqueLinks.filter(link => link.text.toLowerCase().includes(query.toLowerCase()));
+      
+      commandPaletteResults.innerHTML = ''; // Clear previous results
+      filtered.slice(0, 10).forEach(link => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.textContent = link.text;
+        a.onclick = closePalette; // Close palette when a link is clicked
+        li.appendChild(a);
+        commandPaletteResults.appendChild(li);
+      });
+    };
+
+    // Open palette with Cmd/Ctrl + K
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openPalette();
+      }
+      if (e.key === 'Escape' && commandPaletteOverlay.style.display === 'flex') {
+        closePalette();
+      }
+    });
+
+    commandPaletteInput.addEventListener('input', () => buildPaletteResults(commandPaletteInput.value));
+    commandPaletteOverlay.addEventListener('click', (e) => {
+      if (e.target === commandPaletteOverlay) {
+        closePalette();
+      }
+    });
+  }
+
+
+  // --- 2. "On this page" Sticky TOC ---
+  // This script generates a table of contents based on headings in the article body.
+  // It creates a list of links that scroll to the respective headings when clicked.
+  const tocContainer = document.getElementById('toc-container');
+  const articleBody = document.querySelector('.article-body');
+
+  if (tocContainer && articleBody) {
+    const headings = articleBody.querySelectorAll('h2, h3');
+    if (headings.length > 1) {
+      const tocList = document.createElement('ul');
+      tocList.className = 'toc-list';
+      let tocTitle = document.createElement('h3');
+      tocTitle.textContent = 'On this page';
+      tocContainer.appendChild(tocTitle);
+      
+      headings.forEach((heading, i) => {
+        const id = 'toc-heading-' + i;
+        heading.id = id;
+        
+        const li = document.createElement('li');
+        li.className = 'toc-level-' + heading.tagName.toLowerCase().charAt(1);
+        
+        const a = document.createElement('a');
+        a.textContent = heading.textContent;
+        a.href = '#' + id;
+        
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+      
+      tocContainer.appendChild(tocList);
+
+      const tocLinks = tocContainer.querySelectorAll('a');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          const correspondingLink = tocContainer.querySelector(`a[href="#${id}"]`);
+          if (correspondingLink) {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(link => link.classList.remove('is-active'));
+              correspondingLink.classList.add('is-active');
+            }
+          }
+        });
+      }, { rootMargin: "0px 0px -80% 0px" });
+
+      headings.forEach(heading => observer.observe(heading));
+    }
+  }
+
+  // --- 4. Image Comparison Slider ---
+  // This script allows users to compare two images by sliding a handle.
+  // It sets the width of the top image based on the slider handle position.
+  document.querySelectorAll('.comparison-slider').forEach(slider => {
+    let isDragging = false;
+    const handle = slider.querySelector('.slider-handle');
+    const topImg = slider.querySelector('.img-top');
+
+    const moveSlider = (e) => {
+      if (!isDragging) return;
+      const rect = slider.getBoundingClientRect();
+      let x = (e.clientX || e.touches[0].clientX) - rect.left;
+      x = Math.max(0, Math.min(x, rect.width));
+      const percentage = (x / rect.width) * 100;
+      topImg.style.width = percentage + '%';
+      handle.style.left = percentage + '%';
+    };
+
+    handle.addEventListener('mousedown', (e) => { e.preventDefault(); isDragging = true; });
+    handle.addEventListener('touchstart', (e) => { e.preventDefault(); isDragging = true; });
+    document.addEventListener('mouseup', () => isDragging = false);
+    document.addEventListener('touchend', () => isDragging = false);
+    document.addEventListener('mousemove', moveSlider);
+    document.addEventListener('touchmove', moveSlider);
+  });
+
+  // --- 5. Click-to-Zoom Images ---
+  // This script allows users to click on images to zoom in.
+  // It creates an overlay with the zoomed image and closes it on click.
+  if (articleBody) {
+    articleBody.querySelectorAll('img').forEach(img => {
+      if (!img.closest('a')) { // Don't apply to images that are already links
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'image-zoom-overlay';
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+
+          setTimeout(() => overlay.classList.add('visible'), 10);
+          
+          overlay.addEventListener('click', () => {
+            overlay.classList.remove('visible');
+            overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
+          });
+        });
+      }
+    });
+  }
+
+  // --- 7. Article Reading Progress Bar ---
+  // This script creates a reading progress bar that updates as the user scrolls.
+  // It calculates the scroll position and sets the width of the progress bar accordingly.
+  const progressBar = document.createElement('div');
+  progressBar.id = 'reading-progress-bar';
+  document.body.appendChild(progressBar);
+  
+  const updateProgressBar = () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (scrollHeight > 0) {
+      const progress = (scrollTop / scrollHeight) * 100;
+      progressBar.style.width = progress + '%';
+    } else {
+        progressBar.style.width = '0%';
+    }
+  };
+  
+  window.addEventListener('scroll', updateProgressBar);
+  
+  // --- 8. Interactive Checklists ---
+  // This script allows users to check/uncheck items in a checklist.
+  // It toggles the 'checked' class on list items when clicked.
+  document.querySelectorAll('.interactive-checklist li').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+    });
+  });
+
+  // --- Zendesk Garden: Stepper ---
+  // This script initializes the stepper component, allowing users to click through steps.
+  // It updates the stepper's state based on user interaction.
+  document.querySelectorAll('.stepper').forEach(stepper => {
+    const steps = stepper.querySelectorAll('.stepper-item');
+    steps.forEach((step, index) => {
+      step.addEventListener('click', () => {
+        steps.forEach((s, i) => {
+          s.classList.remove('is-active', 'is-completed');
+          if (i < index) {
+            s.classList.add('is-completed');
+          } else if (i === index) {
+            s.classList.add('is-active');
+          }
+        });
+      });
+    });
+  });
+
+});
+
+// This script enhances the Knowledge Base article experience with various features
+// such as custom article layouts, animated details sections, copy-to-clipboard functionality,
+// expand/collapse all details, and interactive hotspots.
+// It also includes a content drawer for displaying additional information dynamically.
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Adds a body class for custom article layouts ---
+    // This checks if a wrapper with the ID 'kb-article-wrapper' exists
+    // and adds a class to the body tag for article-specific styling.
+    const kbArticle = document.getElementById('kb-article-wrapper');
+    if (kbArticle) {
+        document.body.classList.add('kb-article-view');
+    }
+
+    // --- Animates <details> elements for smooth open/close ---
+    // Finds all <details> elements with the class '.kb-details'
+    const allDetails = document.querySelectorAll('.kb-details');
+    allDetails.forEach((details) => {
+        const summary = details.querySelector('.kb-summary');
+        const content = details.querySelector('.kb-details-content');
+
+        if (summary && content) {
+            summary.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default toggle
+                if (details.open) {
+                    const closingAnimation = content.animate({
+                        height: [content.offsetHeight + 'px', 0]
+                    }, { duration: 200, easing: 'ease-out' });
+                    closingAnimation.onfinish = () => {
+                        details.removeAttribute('open');
+                    };
+                } else {
+                    details.setAttribute('open', '');
+                    content.animate({
+                        height: [0, content.offsetHeight + 'px']
+                    }, { duration: 200, easing: 'ease-out' });
+                }
+            });
+        }
+    });
+
+    // --- Copy-to-Clipboard Snippet Logic ---
+    const allCopySnippets = document.querySelectorAll('.kb-copy-snippet');
+    allCopySnippets.forEach(snippet => {
+        const button = snippet.querySelector('button');
+        const textToCopyEl = snippet.querySelector('code');
+
+        if (button && textToCopyEl) {
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(textToCopyEl.innerText).then(() => {
+                    const originalText = button.innerHTML;
+                    button.innerHTML = 'Copied!';
+                    button.classList.add('copied');
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const expandBtn = document.getElementById('expandAllDetails');
+  const collapseBtn = document.getElementById('collapseAllDetails');
+  const allDetails = document.querySelectorAll('.kb-details');
+
+  if (expandBtn && collapseBtn && allDetails.length > 0) {
+    expandBtn.addEventListener('click', () => {
+      allDetails.forEach(details => details.setAttribute('open', ''));
+    });
+
+    collapseBtn.addEventListener('click', () => {
+      allDetails.forEach(details => details.removeAttribute('open'));
+    });
+  }
+});
+
+// Hotspots functionality
+// This script allows for toggling hotspots on click, and closing them when clicking outside.
+document.addEventListener('DOMContentLoaded', function() {
+  const allHotspots = document.querySelectorAll('.hotspot');
+
+  allHotspots.forEach(hotspot => {
+    hotspot.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevents the click from closing the hotspot immediately
+
+      // If this hotspot is already active, close it. Otherwise, activate it.
+      const isActive = hotspot.classList.contains('active');
+
+      // First, close all other hotspots
+      allHotspots.forEach(h => h.classList.remove('active'));
+      
+      // If it wasn't active, make it active now.
+      if (!isActive) {
+        hotspot.classList.add('active');
+      }
+    });
+  });
+
+  // Add a global click listener to close hotspots when clicking elsewhere
+  document.addEventListener('click', (e) => {
+    // Check if the click was outside of any hotspot
+    if (!e.target.closest('.hotspot')) {
+      allHotspots.forEach(h => h.classList.remove('active'));
+    }
+  });
+});
+
+// Content Drawer functionality
+// This script handles the opening and closing of a content drawer, fetching content dynamically based on links
+// clicked, and displaying it within the drawer.
+// It also includes error handling for content loading and allows closing the drawer with a button or by clicking outside the drawer.
+document.addEventListener('DOMContentLoaded', function() {
+  const drawerOverlay = document.getElementById('contentDrawerOverlay');
+  const drawerPanel = document.getElementById('contentDrawerPanel');
+  const drawerTitle = document.getElementById('contentDrawerTitle');
+  const drawerContent = document.getElementById('contentDrawerContent');
+  const drawerCloseBtn = document.getElementById('contentDrawerClose');
+
+  // Ensure drawer elements exist before proceeding
+  if (!drawerOverlay || !drawerPanel || !drawerCloseBtn) {
+    return;
+  }
+
+  // Function to open the drawer
+  const openDrawer = () => {
+    drawerOverlay.classList.add('is-open');
+  };
+
+  // Function to close the drawer
+  const closeDrawer = () => {
+    drawerOverlay.classList.remove('is-open');
+    // Clear content after the animation finishes
+    setTimeout(() => {
+      drawerTitle.textContent = 'Loading...';
+      drawerContent.innerHTML = '';
+      drawerContent.classList.remove('is-loading');
+    }, 300);
+  };
+
+  // Function to fetch and display content
+  const loadDrawerContent = async (url, selector) => {
+    openDrawer();
+    drawerContent.classList.add('is-loading');
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const htmlText = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+      
+      const targetElement = doc.querySelector(selector);
+      const articleTitle = doc.querySelector('h1.article-title');
+
+      if (targetElement) {
+        drawerTitle.textContent = articleTitle ? articleTitle.innerText.trim() : 'Content';
+        drawerContent.innerHTML = targetElement.innerHTML;
+      } else {
+        drawerTitle.textContent = 'Error';
+        drawerContent.innerHTML = `<p>Sorry, the requested content with the selector "<strong>${selector}</strong>" could not be found in the linked article.</p>`;
+      }
+    } catch (error) {
+      console.error('Error fetching drawer content:', error);
+      drawerTitle.textContent = 'Error';
+      drawerContent.innerHTML = '<p>Sorry, there was an error loading the content.</p>';
+    } finally {
+      drawerContent.classList.remove('is-loading');
+    }
+  };
+
+  // Event listener for all clicks on the page (delegation)
+  document.body.addEventListener('click', (e) => {
+    const drawerLink = e.target.closest('a[data-drawer-content]');
+    if (drawerLink) {
+      e.preventDefault();
+      const url = drawerLink.href;
+      const selector = drawerLink.dataset.drawerContent;
+      loadDrawerContent(url, selector);
+    }
+  });
+
+  // Close button functionality
+  drawerCloseBtn.addEventListener('click', closeDrawer);
+
+  // Close drawer when clicking on the overlay (but not the panel itself)
+  drawerOverlay.addEventListener('click', (e) => {
+    if (e.target === drawerOverlay) {
+      closeDrawer();
+    }
+  });
+
+  // Close drawer with the Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawerOverlay.classList.contains('is-open')) {
+      closeDrawer();
+    }
+  });
+});
+
+
+// Interactive Comparison Grid functionality
+// This script allows users to filter and highlight columns in a comparison grid.
+document.addEventListener('DOMContentLoaded', function() {
+  // --- Interactive Comparison Grid ---
+  const gridContainers = document.querySelectorAll('.comparison-grid-container');
+
+  gridContainers.forEach(container => {
+    const filterButtons = container.querySelectorAll('.grid-filter-btn');
+    const grid = container.querySelector('.comparison-grid');
+    const cells = container.querySelectorAll('.grid-cell');
+    
+    if (!grid || filterButtons.length === 0) return;
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const colToHighlight = button.dataset.highlightCol;
+
+        // Update button active state
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Handle highlighting
+        if (colToHighlight === 'all') {
+          grid.classList.remove('is-highlighting');
+          cells.forEach(cell => {
+            cell.classList.remove('is-faded', 'is-highlighted');
+          });
+        } else {
+          grid.classList.add('is-highlighting');
+          cells.forEach(cell => {
+            cell.classList.remove('is-faded', 'is-highlighted');
+            if (cell.classList.contains('col-' + colToHighlight)) {
+              cell.classList.add('is-highlighted');
+            } else if (!cell.classList.contains('grid-label')) {
+              cell.classList.add('is-faded');
+            }
+          });
+        }
+      });
+    });
+  });
+});
+
+
+// Animated Chart Feature
+// This script creates an animated bar chart using Chart.js to visualize savings growth over time.
+document.addEventListener('DOMContentLoaded', function() {
+  // --- Animated Chart Feature ---
+  const savingsChartCtx = document.getElementById('savingsGrowthChart');
+
+  // Only run this code if the canvas element with this ID exists on the page
+  if (savingsChartCtx) {
+    const labels = ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'];
+    const data = {
+      labels: labels,
+      datasets: [{
+        label: 'Total Savings',
+        backgroundColor: 'rgba(62, 79, 229, 0.8)', // semi-transparent --percapita-blue
+        borderColor: 'rgb(62, 79, 229)',
+        borderWidth: 1,
+        borderRadius: 4,
+        data: [2255, 3568, 4941, 6380, 7888], // Example data
+      }]
+    };
+
+    const config = {
+      type: 'bar', // You can change this to 'line', 'pie', etc.
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false // Hides the legend label at the top
+          },
+          title: {
+            display: true,
+            text: 'Savings Balance ($)'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    // Create the chart
+    new Chart(savingsChartCtx, config);
+  }
+});
+
+
+// Scenario Toggles
+// This script handles toggling between different scenarios in a content wrapper.
+document.addEventListener('DOMContentLoaded', function() {
+  // --- "View As" Scenario Toggles ---
+  const allToggleContainers = document.querySelectorAll('.scenario-toggles');
+
+  allToggleContainers.forEach(container => {
+    const buttons = container.querySelectorAll('.scenario-btn');
+    const contentWrapper = container.nextElementSibling;
+    
+    if (!contentWrapper || !contentWrapper.classList.contains('scenario-content-wrapper')) {
+      console.warn('Scenario Toggles: Could not find a .scenario-content-wrapper next to a toggle container.');
+      return;
+    }
+
+    const scenarioContents = contentWrapper.querySelectorAll('.scenario-content');
+
+    // Set a default active state on page load (activate the first button and its content)
+    if (buttons.length > 0 && scenarioContents.length > 0) {
+      buttons[0].classList.add('active');
+      const defaultScenario = buttons[0].dataset.scenarioTarget;
+      const defaultContent = contentWrapper.querySelector(`.scenario-content[data-scenario="${defaultScenario}"]`);
+      if (defaultContent) {
+        defaultContent.classList.add('is-active');
+      }
+    }
+    
+    container.addEventListener('click', (e) => {
+      // Ensure we clicked a scenario button
+      if (!e.target.matches('.scenario-btn')) return;
+
+      const button = e.target;
+      const targetScenario = button.dataset.scenarioTarget;
+
+      // Update button active states
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      // Update content visibility
+      scenarioContents.forEach(content => {
+        content.classList.remove('is-active');
+        if (content.dataset.scenario === targetScenario) {
+          content.classList.add('is-active');
+        }
+      });
+    });
+  });
+});
+
+
+// Favorites Toolkit
+// This script allows users to favorite articles and manage their favorites list.
+document.addEventListener('DOMContentLoaded', function() {
+  // --- Favorites Toolkit Logic ---
+  const FAVORITES_KEY = 'percapitaKbFavorites';
+  const favoritesListContainer = document.getElementById('favorites-list');
+  const favoriteBtn = document.querySelector('.favorite-btn');
+
+  const getFavorites = () => {
+    return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
+  };
+
+  const saveFavorites = (favoritesArray) => {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favoritesArray));
+  };
+
+  const renderFavoritesList = () => {
+    if (!favoritesListContainer) return;
+    
+    const favorites = getFavorites();
+    favoritesListContainer.innerHTML = ''; // Clear the list
+
+    if (favorites.length === 0) {
+      favoritesListContainer.innerHTML = '<li class="no-favorites">You haven\'t favorited any articles yet.</li>';
+    } else {
+      favorites.forEach(fav => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = fav.url;
+        a.textContent = fav.title;
+        a.setAttribute('role', 'menuitem');
+        li.appendChild(a);
+        favoritesListContainer.appendChild(li);
+      });
+    }
+  };
+
+  const setupFavoriteButton = () => {
+    if (!favoriteBtn) return;
+
+    const currentUrl = window.location.href;
+    const favorites = getFavorites();
+    const isAlreadyFavorited = favorites.some(fav => fav.url === currentUrl);
+
+    if (isAlreadyFavorited) {
+      favoriteBtn.classList.add('is-favorite');
+      favoriteBtn.querySelector('span').textContent = 'Favorited';
+    }
+
+    favoriteBtn.addEventListener('click', () => {
+      let currentFavorites = getFavorites();
+      const articleTitle = document.querySelector('h1.article-title').innerText.trim();
+      const articleUrl = window.location.href;
+      
+      const favoriteIndex = currentFavorites.findIndex(fav => fav.url === articleUrl);
+
+      if (favoriteIndex > -1) {
+        // It's already a favorite, so remove it
+        currentFavorites.splice(favoriteIndex, 1);
+        favoriteBtn.classList.remove('is-favorite');
+        favoriteBtn.querySelector('span').textContent = 'Favorite';
+      } else {
+        // It's not a favorite, so add it
+        currentFavorites.push({ title: articleTitle, url: articleUrl });
+        favoriteBtn.classList.add('is-favorite');
+        favoriteBtn.querySelector('span').textContent = 'Favorited';
+      }
+      
+      saveFavorites(currentFavorites);
+      renderFavoritesList(); // Re-render the list immediately
+    });
+  };
+
+  // Initial setup on page load
+  renderFavoritesList();
+  setupFavoriteButton();
+});
