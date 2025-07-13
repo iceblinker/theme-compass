@@ -666,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
      FEATURE-RICH KB SCRIPTS
      ========================================================================== */
 
-  // --- 1. Command Palette (Cmd/Ctrl + K) ---
+  // --- Command Palette (Cmd/Ctrl + K) ---
   // This script creates a command palette that allows users to quickly navigate to links on the page.
   const commandPaletteOverlay = document.getElementById('commandPaletteOverlay');
   const commandPaletteInput = document.getElementById('commandPaletteInput');
@@ -728,7 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // --- 2. "On this page" Sticky TOC ---
+  // --- "On this page" Sticky TOC ---
   // This script generates a table of contents based on headings in the article body.
   const tocContainer = document.getElementById('toc-container');
   const articleBody = document.querySelector('.article-body');
@@ -775,10 +775,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- 3. Process/Update Timeline ---
-  // This is a CSS-only component, no JS needed unless for dynamic loading.
-
-  // --- 4. Image Comparison Slider ---
+  // --- Image Comparison Slider ---
   // This script allows users to compare two images by sliding a handle.
   document.querySelectorAll('.comparison-slider').forEach(slider => {
     let isDragging = false;
@@ -802,7 +799,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchmove', onDrag);
   });
 
-  // --- 5. Click-to-Zoom Images ---
+  // --- Click-to-Zoom Images ---
   // This script allows users to click on images to zoom in.
   // It creates an overlay with the zoomed image and closes it on click.
   if (articleBody) {
@@ -829,10 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 6. Enhanced Tooltips ---
-  // This is a CSS-only component, no JS needed.
-
-  // --- 7. Article Reading Progress Bar ---
+  // --- Article Reading Progress Bar ---
   // This script creates a reading progress bar that fills as the user scrolls down the article.
   const progressBar = document.createElement('div');
   progressBar.id = 'reading-progress-bar';
@@ -845,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
     progressBar.style.width = progress + '%';
   });
   
-  // --- 8. Interactive Checklists ---
+  // --- Interactive Checklists ---
   // This script allows users to check off items in a checklist.
   // It toggles a 'checked' class on list items when clicked.
   document.querySelectorAll('.interactive-checklist li').forEach(item => {
@@ -858,11 +852,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ==========================================================================
-     FEATURE-RICH KB SCRIPTS
-     ========================================================================== */
-
-  // --- 1. Command Palette (Cmd/Ctrl + K) ---
+  // --- Command Palette (Cmd/Ctrl + K) ---
   // This script creates a command palette that allows users to quickly navigate to links on the page.
   // It opens with Cmd/Ctrl + K and filters links based on user input.
   const commandPaletteOverlay = document.getElementById('commandPaletteOverlay');
@@ -929,7 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // --- 2. "On this page" Sticky TOC ---
+  // --- "On this page" Sticky TOC ---
   // This script generates a table of contents based on headings in the article body.
   // It creates a list of links that scroll to the respective headings when clicked.
   const tocContainer = document.getElementById('toc-container');
@@ -979,7 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- 4. Image Comparison Slider ---
+  // --- Image Comparison Slider ---
   // This script allows users to compare two images by sliding a handle.
   // It sets the width of the top image based on the slider handle position.
   document.querySelectorAll('.comparison-slider').forEach(slider => {
@@ -1005,7 +995,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchmove', moveSlider);
   });
 
-  // --- 5. Click-to-Zoom Images ---
+  // --- Click-to-Zoom Images ---
   // This script allows users to click on images to zoom in.
   // It creates an overlay with the zoomed image and closes it on click.
   if (articleBody) {
@@ -1031,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 7. Article Reading Progress Bar ---
+  // --- Article Reading Progress Bar ---
   // This script creates a reading progress bar that updates as the user scrolls.
   // It calculates the scroll position and sets the width of the progress bar accordingly.
   const progressBar = document.createElement('div');
@@ -1506,4 +1496,124 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial setup on page load
   renderFavoritesList();
   setupFavoriteButton();
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  // --- Custom Article Layouts ---
+  // This script checks if the article wrapper exists and adds a class to the body
+  // for custom styling of Knowledge Base articles.
+  const kbArticleWrapper = document.getElementById('kb-article-wrapper');
+  if (kbArticleWrapper) {
+    document.body.classList.add('kb-article-view');
+  }
+
+  // --- Animated Collapsible Sections ---
+  // This script enhances the <details> elements with a smooth open/close animation.
+
+  const allDetails = document.querySelectorAll('.kb-details');
+  allDetails.forEach((details) => {
+    const summary = details.querySelector('.kb-summary');
+    const content = details.querySelector('.kb-details-content');
+
+    if (summary && content) {
+      summary.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default toggle
+        if (details.open) {
+          const closingAnimation = content.animate({ height: [content.offsetHeight + 'px', 0] }, { duration: 200, easing: 'ease-out' });
+          closingAnimation.onfinish = () => { details.removeAttribute('open'); };
+        } else {
+          details.setAttribute('open', '');
+          content.animate({ height: [0, content.offsetHeight + 'px'] }, { duration: 200, easing: 'ease-out' });
+        }
+      });
+    }
+  });
+
+  // --- Sticky In-Page Navigation ---
+  // This script creates a sticky navigation bar that appears when the user scrolls down the page.
+  // It also adds smooth scrolling for anchor links within the sticky nav.
+  const stickyNav = document.querySelector('.kb-sticky-nav');
+  if (stickyNav) {
+    const navOffsetTop = stickyNav.offsetTop;
+    const handleScroll = () => {
+      if (window.scrollY >= navOffsetTop) {
+        stickyNav.classList.add('stuck');
+      } else {
+        stickyNav.classList.remove('stuck');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    // Smooth scroll for anchor links in the sticky nav
+    stickyNav.querySelectorAll('a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const offsetPosition = targetElement.offsetTop - (stickyNav.offsetHeight + 20);
+          window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        }
+      });
+    });
+  }
+
+  // --- Custom Tabbed Content ---
+  // This script initializes tabbed content sections, allowing users to switch between different tabs.
+  // It sets the first tab as active by default and handles tab switching.
+  const allTabContainers = document.querySelectorAll('.kb-tabs');
+  allTabContainers.forEach(tabContainer => {
+    const tabs = tabContainer.querySelectorAll('.kb-tab');
+    const panels = tabContainer.querySelectorAll('.kb-tab-panel');
+
+    if (tabs.length > 0) {
+      // Set default active state
+      tabs[0].classList.add('active');
+      const defaultPanel = document.getElementById(tabs[0].dataset.tab);
+      if (defaultPanel) defaultPanel.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.dataset.tab;
+        const targetPanel = document.getElementById(targetId);
+
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+      });
+    });
+  });
+
+  // --- Copy-to-Clipboard Snippets ---
+  // This script adds copy-to-clipboard functionality to code snippets.
+  // It listens for clicks on buttons within elements with the class '.kb-copy-snippet'.
+  const allCopySnippets = document.querySelectorAll('.kb-copy-snippet');
+  allCopySnippets.forEach(snippet => {
+    const button = snippet.querySelector('button');
+    const textToCopyEl = snippet.querySelector('code');
+
+    if (button && textToCopyEl) {
+      button.addEventListener('click', () => {
+        navigator.clipboard.writeText(textToCopyEl.innerText).then(() => {
+          const originalText = button.innerHTML;
+          button.innerHTML = 'Copied!';
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy text: ', err);
+        });
+      });
+    }
+  });
+
 });

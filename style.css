@@ -5797,3 +5797,148 @@ kbd.kb-key {
   border-radius: 8px;
   overflow: auto;
 }
+
+/* Main Article Wrapper for Custom Layouts */
+#kb-article-wrapper {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  background-color: #f9fafb;
+  padding: 1rem;
+}
+@media (min-width: 1024px) {
+   #kb-article-wrapper {
+     padding: 2rem;
+   }
+}
+
+/* Custom Typography within the Wrapper */
+#kb-article-wrapper .kb-h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+#kb-article-wrapper .kb-h3 {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Custom Layout Grid */
+#kb-article-wrapper .kb-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  #kb-article-wrapper .kb-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #kb-article-wrapper .kb-grid-col-2 {
+    grid-column: span 2 / span 2;
+  }
+  #kb-article-wrapper .kb-grid-col-1 {
+    grid-column: span 1 / span 1;
+  }
+}
+
+#kb-article-wrapper .kb-hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--border-color, #e5e7eb);
+  margin: 1rem 0;
+}
+
+/* Custom Card Component */
+#kb-article-wrapper .kb-card {
+  background-color: var(--background-color);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+/* Custom Icon Styling */
+#kb-article-wrapper .kb-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.5rem;
+  color: var(--link-color);
+  flex-shrink: 0;
+}
+
+/* Step-by-Step Flow Component */
+.step-flow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.step-flow::before {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  left: 1.25rem;
+  bottom: 1rem;
+  width: 2px;
+  background-color: #e5e7eb;
+  transform: translateX(-50%);
+}
+.step-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.step-number {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--percapita-blue);
+  color: var(--percapita-white);
+  font-weight: bold;
+  font-size: 1.1rem;
+  z-index: 1;
+  box-shadow: 0 0 0 4px var(--background-color);
+}
+.step-content {
+  flex-grow: 1;
+  padding-top: 0.25rem;
+}
+.step-content h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Reusable Phone Mockup Component */
+.kb-phone-mockup {
+  background-color: #1f2937;
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  max-width: 300px;
+  margin: 1.5rem auto;
+}
+
+.kb-phone-mockup img {
+  width: 100%;
+  display: block;
+  border-radius: 28px;
+}
+
+/* --- This class hides the default sidebar for a full-width article view --- */
+.kb-article-view .article-container > .article-sidebar {
+  display: none;
+}
+.kb-article-view .article-container > .article {
+  max-width: 100%;
+  flex-basis: 100%;
+  padding: 0;
+}
