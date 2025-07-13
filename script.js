@@ -1661,61 +1661,7 @@ videoContainers.forEach(container => {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-  // --- Tab Component ---
-  const tabContainers = document.querySelectorAll('.tab-container');
-
-  tabContainers.forEach(container => {
-    const tabList = container.querySelector('.tab-list');
-    const tabs = container.querySelectorAll('.tab');
-    
-    if (!tabList) return;
-
-    const activateTab = (tab) => {
-      const panelId = tab.getAttribute('aria-controls');
-      const targetPanel = document.getElementById(panelId);
-
-      // Deactivate all other tabs in this group
-      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-      
-      // Hide all panels controlled by this tab group
-      tabs.forEach(t => {
-        const p_id = t.getAttribute('aria-controls');
-        const p = document.getElementById(p_id);
-        if (p) p.setAttribute('hidden', 'hidden');
-      });
-
-      // Activate the clicked tab and its panel
-      tab.setAttribute('aria-selected', 'true');
-      if (targetPanel) {
-        targetPanel.removeAttribute('hidden');
-      }
-    };
-
-    tabList.addEventListener('click', (e) => {
-      if (e.target.matches('.tab')) {
-        activateTab(e.target);
-      }
-    });
-
-    // Keyboard navigation for accessibility
-    tabList.addEventListener('keydown', (e) => {
-      if (e.target.matches('.tab')) {
-        let index = Array.from(tabs).indexOf(e.target);
-        if (e.key === 'ArrowRight') {
-          index = (index + 1) % tabs.length;
-          tabs[index].focus();
-          activateTab(tabs[index]);
-        } else if (e.key === 'ArrowLeft') {
-          index = (index - 1 + tabs.length) % tabs.length;
-          tabs[index].focus();
-          activateTab(tabs[index]);
-        }
-      }
-    });
-  });
-});
-
+// --- MERGED SCRIPT FOR TABS (FROM old-script.js) ---
 document.addEventListener('DOMContentLoaded', function() {
   // --- Tab Component Logic ---
   const tabContainers = document.querySelectorAll('.tab-container');
