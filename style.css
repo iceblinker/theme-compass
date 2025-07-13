@@ -5740,6 +5740,41 @@ kbd.kb-key {
   gap: 1rem;
 }
 
+/* --- Unify Article Control Buttons --- */
+
+/* Base style for the Zendesk Follow/Unfollow button */
+.article-controls .subscriptions-subscribe button {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: var(--percapita-charcoal-light);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  height: auto; /* Override default fixed height */
+  line-height: inherit; /* Override default line-height */
+  transition: all 0.2s ease;
+}
+
+/* Hover state for the Follow button */
+.article-controls .subscriptions-subscribe button:hover {
+  border-color: var(--percapita-blue);
+  color: var(--percapita-blue);
+  background-color: transparent; /* Ensure it doesn't turn blue on hover */
+}
+
+/* This styles the "Unfollow" state (when it's active) */
+.article-controls .subscriptions-subscribe button[data-selected="true"] {
+  background-color: var(--percapita-orange);
+  color: var(--percapita-white);
+  border-color: var(--percapita-orange);
+}
+
+/* Hover state for the "Unfollow" button */
+.article-controls .subscriptions-subscribe button[data-selected="true"]:hover {
+  background-color: #E56A3F; /* A darker orange for hover */
+  border-color: #E56A3F;
+}
+
 .favorite-btn {
   background-color: transparent;
   border: 1px solid #d1d5db;
@@ -5794,9 +5829,6 @@ kbd.kb-key {
   font-style: italic;
   color: var(--percapita-charcoal-light);
 }
-
-
-/* --- Styles for the KB Authoring Guide --- */
 
 
 /* Adds spacing between each component's section */
@@ -6084,4 +6116,87 @@ kbd.kb-key {
   position: absolute;
   left: 0;
   font-weight: bold;
+}
+
+/* Tab Component Styling */
+.tab-container {
+  margin-top: 1.5rem;
+}
+.tab-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 2px solid #e5e7eb;
+}
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--percapita-charcoal-light);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+  list-style-type: none; /* Ensure no bullets appear */
+}
+.tab:hover {
+  color: var(--percapita-blue);
+}
+.tab[aria-selected="true"] {
+  color: var(--percapita-blue);
+  border-bottom-color: var(--percapita-blue);
+}
+.tab-panel {
+  display: none; /* JS will handle showing the active panel */
+  padding: 2rem 0;
+  border-top: none;
+}
+.tab-panel[hidden] {
+  display: none;
+}
+.tab-panel:not([hidden]) {
+  display: block;
+}
+
+/* Custom Header Components from Article */
+.kb-header {
+  margin-bottom: 2rem;
+}
+.kb-header-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.kb-h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--percapita-charcoal);
+  margin: 0;
+}
+.kb-badge {
+  display: inline-block;
+  background-color: var(--percapita-blue);
+  color: var(--percapita-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+.kb-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  color: var(--percapita-charcoal-light);
+}
+
+/* Custom Image Container */
+.image-crop-container {
+  width: 100%;
+  padding-top: 56.25%; /* Default 16:9 aspect ratio */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
 }
