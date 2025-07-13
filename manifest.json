@@ -35,6 +35,27 @@
           "description": "Default link color",
           "label": "Link color",
           "value": "#3E4FE5"
+        },
+        {
+          "identifier": "hover_link_color",
+          "type": "color",
+          "description": "hover_link_color_description",
+          "label": "hover_link_color_label",
+          "value": "#323FB7"
+        },
+        {
+          "identifier": "visited_link_color",
+          "type": "color",
+          "description": "visited_link_color_description",
+          "label": "visited_link_color_label",
+          "value": "#3E4FE5"
+        },
+        {
+          "identifier": "background_color",
+          "type": "color",
+          "description": "background_color_description",
+          "label": "background_color_label",
+          "value": "#FFFFFF"
         }
       ]
     },
@@ -47,14 +68,8 @@
           "description": "Font for headings",
           "label": "Heading font",
           "options": [
-            {
-              "label": "Poppins",
-              "value": "'Poppins', sans-serif"
-            },
-            {
-              "label": "System",
-              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-            }
+            { "label": "Poppins", "value": "'Poppins', sans-serif" },
+            { "label": "System", "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" }
           ],
           "value": "'Poppins', sans-serif"
         },
@@ -64,14 +79,8 @@
           "description": "Font for body text",
           "label": "Text font",
           "options": [
-            {
-              "label": "Poppins",
-              "value": "'Poppins', sans-serif"
-            },
-            {
-              "label": "System",
-              "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-            }
+            { "label": "Poppins", "value": "'Poppins', sans-serif" },
+            { "label": "System", "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" }
           ],
           "value": "'Poppins', sans-serif"
         }
@@ -80,48 +89,68 @@
     {
       "label": "Brand",
       "variables": [
-        {
-          "identifier": "logo",
-          "type": "file",
-          "description": "Your company logo",
-          "label": "Logo"
-        },
-        {
-          "identifier": "favicon",
-          "type": "file",
-          "description": "Your company favicon",
-          "label": "Favicon"
-        }
+        { "identifier": "logo", "type": "file", "description": "Your company logo", "label": "Logo" },
+        { "identifier": "show_brand_name", "type": "checkbox", "description": "show_brand_name_description", "label": "show_brand_name_label", "value": false },
+        { "identifier": "favicon", "type": "file", "description": "Your company favicon", "label": "Favicon" }
       ]
     },
     {
-      "label": "Hero Image",
+      "label": "Images",
       "variables": [
-        {
-          "identifier": "homepage_background_image",
-          "type": "file",
-          "description": "Background image for the homepage hero unit",
-          "label": "Homepage background image"
-        }
+        { "identifier": "homepage_background_image", "type": "file", "description": "homepage_background_image_description", "label": "homepage_background_image_label" },
+        { "identifier": "community_background_image", "type": "file", "description": "community_background_image_description", "label": "community_background_image_label" },
+        { "identifier": "community_image", "type": "file", "description": "community_image_description", "label": "community_image_label" }
       ]
     },
     {
-      "label": "Article Page",
+      "label": "Search Settings",
       "variables": [
-        {
-          "identifier": "show_article_author",
-          "type": "checkbox",
-          "description": "Show author information on articles",
-          "label": "Show article author",
-          "value": true
-        },
-        {
-          "identifier": "show_article_comments",
-          "type": "checkbox",
-          "description": "Enable comments on articles",
-          "label": "Show article comments",
-          "value": true
-        }
+        { "identifier": "instant_search", "type": "checkbox", "description": "instant_search_description", "label": "instant_search_label", "value": true },
+        { "identifier": "scoped_kb_search", "type": "checkbox", "description": "scoped_knowledge_base_search_description", "label": "scoped_knowledge_base_search_label_v2", "value": true },
+        { "identifier": "scoped_community_search", "type": "checkbox", "description": "scoped_community_search_description", "label": "scoped_community_search_label", "value": false }
+      ]
+    },
+    {
+      "label": "Home page",
+      "variables": [
+        { "identifier": "show_recent_activity", "type": "checkbox", "description": "recent_activity_description", "label": "recent_activity_label", "value": true }
+      ]
+    },
+    {
+      "label": "Article page",
+      "variables": [
+        { "identifier": "show_articles_in_section", "type": "checkbox", "description": "articles_in_section_description", "label": "articles_in_section_label", "value": true },
+        { "identifier": "show_article_author", "type": "checkbox", "description": "article_author_description", "label": "article_author_label", "value": true },
+        { "identifier": "show_article_comments", "type": "checkbox", "description": "article_comments_description", "label": "article_comments_label", "value": true },
+        { "identifier": "show_follow_article", "type": "checkbox", "description": "follow_article_description", "label": "follow_article_label", "value": true },
+        { "identifier": "show_recently_viewed_articles", "type": "checkbox", "description": "recently_viewed_articles_description", "label": "recently_viewed_articles_label", "value": true },
+        { "identifier": "show_related_articles", "type": "checkbox", "description": "related_articles_description", "label": "related_articles_label", "value": true },
+        { "identifier": "show_article_sharing", "type": "checkbox", "description": "article_sharing_description", "label": "article_sharing_label", "value": false }
+      ]
+    },
+    {
+      "label": "Section page",
+      "variables": [
+        { "identifier": "show_follow_section", "type": "checkbox", "description": "follow_section_description", "label": "follow_section_label", "value": true }
+      ]
+    },
+    {
+      "label": "Community post page",
+      "variables": [
+        { "identifier": "show_follow_post", "type": "checkbox", "description": "follow_post_description", "label": "follow_post_label", "value": false },
+        { "identifier": "show_post_sharing", "type": "checkbox", "description": "post_sharing_description", "label": "post_sharing_label", "value": false }
+      ]
+    },
+    {
+      "label": "Community topic page",
+      "variables": [
+        { "identifier": "show_follow_topic", "type": "checkbox", "description": "follow_topic_description", "label": "follow_topic_label", "value": false }
+      ]
+    },
+    {
+      "label": "Request list page",
+      "variables": [
+        { "identifier": "request_list_beta", "type": "checkbox", "description": "request_list_beta_description", "label": "request_list_beta_label", "value": false }
       ]
     }
   ]
