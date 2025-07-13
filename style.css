@@ -1144,20 +1144,38 @@ ul {
 }
 
 /***** Hero component *****/
-/* Custom Homepage Hero Styles */
+/* Custom Homepage Hero & Layout */
 .hero {
-  height: 450px; /* Increase height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  padding: 80px 60px;
+  text-align: center;
+  width: 90%;
+  margin: 30px auto 10px auto;
+  min-height: 400px; /* Adjusted from original for better balance */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .hero-inner {
-  transform: none; /* Reset default positioning */
-  position: static;
-  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
-  padding: 2rem;
-  border-radius: 8px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.hero-inner .search-scoped {
+  width: 60%; /* Controls search field size on homepage */
+  margin: auto;
+}
+
+/* This was used to create a large space for a logo on the homepage */
+.extra_space {
+  width: 80%; 
+  margin: 0 auto 100px auto; /* Reduced margin for a more modern feel */
+  display: block;
+  position: relative;
 }
 
 .page-header {
@@ -5291,10 +5309,7 @@ zd-summary-block {
   animation: skeleton-shimmer 1.5s infinite;
 }
 
-
-/* --- Migrated Custom Components from Old Theme --- */
-
-/* Semantic Callout Cards */
+//* --- Semantic Callout Cards --- */
 .kb-info-card, .kb-success-card, .kb-warning-card, .kb-alert-card {
   padding: 1rem 1.5rem;
   margin: 1.5rem 0;
@@ -5302,7 +5317,7 @@ zd-summary-block {
   border-radius: 0 8px 8px 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
 }
 .kb-info-card::before, .kb-success-card::before, .kb-warning-card::before, .kb-alert-card::before {
@@ -5316,15 +5331,25 @@ zd-summary-block {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   background-color: currentColor;
+  margin-top: 0.25rem;
 }
-.kb-info-card { background-color: #eef5ff; color: #1a5f9e; border-color: var(--percapita-info-blue, #1f73b7); }
+
+/* Use for helpful tips or neutral information */
+.kb-info-card { background-color: #eef5ff; color: #1a5f9e; border-color: var(--percapita-info-blue); }
 .kb-info-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E"); }
+
+/* Use to confirm a positive outcome */
 .kb-success-card { background-color: #eaf8f0; color: #1e643f; border-color: var(--percapita-success-green); }
 .kb-success-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E"); }
+
+/* Use to advise caution */
 .kb-warning-card { background-color: var(--percapita-cream); color: #92400e; border-color: var(--percapita-orange); }
 .kb-warning-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E"); }
-.kb-alert-card { background-color: #fef2f2; color: #991b1b; border-color: var(--percapita-alert-red, #DF4F4F); }
+
+/* Use for critical, "do not miss" information */
+.kb-alert-card { background-color: #fef2f2; color: #991b1b; border-color: var(--percapita-alert-red); }
 .kb-alert-card::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E"); }
+
 
 /* Copy to Clipboard Component */
 .kb-copy-snippet {
@@ -5941,4 +5966,122 @@ kbd.kb-key {
   max-width: 100%;
   flex-basis: 100%;
   padding: 0;
+}
+
+
+/* Custom Banner for Category & Section Pages */
+.top-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 150px; 
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom Table Design */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-style: hidden; /* Hide outer table border to rely on cell borders */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: var(--percapita-cream);
+  font-weight: bold;
+  text-align: left;
+}
+
+.table td,
+.table th {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+/* Alternative Accordion Style */
+.accordion {
+  cursor: pointer;
+  background-color: var(--percapita-cream);
+  color: var(--text-color);
+  padding: 18px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.4s;
+}
+
+.accordion:hover, .accordion.active {
+  background-color: #f4ead4; /* A darker cream for hover/active */
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: #fcfcfc;  
+  overflow: hidden;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.accordion::before {
+  content: "+";
+  float: right;
+  font-weight: bold;
+  color: var(--percapita-blue);
+}
+
+.accordion.active::before {
+  content: "-";
+}
+
+
+
+/* FAQ Section Styles */
+.faq-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.faq-question {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--percapita-blue);
+}
+
+.do-dont-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.do-dont-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 25px;
+  position: relative;
+}
+
+.do-dont-list li.do::before {
+  content: '✓';
+  color: var(--percapita-success-green);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.do-dont-list li.dont::before {
+  content: '✗';
+  color: var(--percapita-alert-red);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
 }

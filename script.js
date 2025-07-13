@@ -1617,3 +1617,44 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 });
+
+// --- Accordion Component ---
+// This script initializes accordions on the page, allowing users to expand/collapse sections of content.
+const accordions = document.querySelectorAll('.accordion');
+
+accordions.forEach(acc => {
+    acc.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+});
+
+// --- Custom Video Player ---
+const videoContainers = document.querySelectorAll('.kb-video-container');
+
+videoContainers.forEach(container => {
+    const playButton = container.querySelector('.kb-video-play-btn');
+    const videoUrl = container.dataset.videoSrc; // Get video URL from data attribute
+    const playerWrapper = container.querySelector('.kb-video-player');
+
+    if (playButton && videoUrl && playerWrapper) {
+        playButton.addEventListener('click', (event) => {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', videoUrl);
+            iframe.setAttribute('width', '560');
+            iframe.setAttribute('height', '315');
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+
+            playerWrapper.innerHTML = ''; // Clear the player wrapper
+            playerWrapper.appendChild(iframe);
+            event.target.style.display = 'none'; // Hide the play button
+        });
+    }
+});
