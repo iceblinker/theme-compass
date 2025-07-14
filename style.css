@@ -2526,6 +2526,7 @@ ul {
 
 /***** Community *****/
 .community-hero {
+  /* background-image: url($community_background_image); */
   background-image: url($assets-hero-jpg);
   margin-bottom: 10px;
 }
