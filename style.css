@@ -18,6 +18,7 @@
   --percapita-orange: #F27C4F;
   --percapita-charcoal: #353131;
   --percapita-white: #FFFFFF;
+  --percapita-beige: #F9F4E8;
 
   /* Percapita Secondary Palette */
   --percapita-gold: #FFC72C;
@@ -32,7 +33,7 @@
 
   /* Base Text & Background */
   --text-color: var(--percapita-charcoal);
-  --background-color: var(--percapita-white);
+  --background-color: var(--percapita-beige);
   --link-color: var(--percapita-blue);
 }
 
